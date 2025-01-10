@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class GraphTraverser {
+class GraphTraverser { //Code provided by freeCodeCamp 
 
 	public static void depthFirstTraversal(Vertex start, ArrayList<Vertex> visitedVertices) {
 		System.out.println(start.getData());

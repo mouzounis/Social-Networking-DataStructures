@@ -45,7 +45,7 @@ public class Users extends Names {
             return this.city;
         }
     
-        public void setAge(int age) {
+        public void setAge(Integer age) {
             this.age = age;
         }
     
@@ -53,7 +53,7 @@ public class Users extends Names {
             return this.age;
         }
     
-        public void setHeight(int height) {
+        public void setHeight(Integer height) {
             this.height = height;
         }
     
@@ -70,10 +70,13 @@ public class Users extends Names {
         }
     
         public ArrayList<String> addInterest(String userInterest){ // needs work
-            ArrayList<String> list = (ArrayList<String>) Arrays.asList(Names.getInterests());
+            List<String> list = Arrays.asList(Names.getInterests());
             if (list.contains(userInterest)) {
                 this.interests.add(userInterest);  
+                System.out.println("Interest "+ userInterest + " added sucessfully" );
+                return interests;
             }
+            System.out.println("Interest cannot be added.");
             return interests;
         }
     
@@ -86,15 +89,15 @@ public class Users extends Names {
             return this.interests;
     }
 
-    // public String toString() {
-    // return "FirstName : " + firstName + " " + "\n" + "LastName: " + lastNane + ""
-    // + "\n" +
-    // "From : " + city + " " + "\n"+ "Age: " + age + " " + "\n" + "Height: " +
-    // height + " " + "\n" + "Interests: " + interests.toString() ;
-    // }
+    public String toString() {
+    return "FirstName : " + firstName + " " + "\n" + "LastName: " + lastNane + ""
+    + "\n" +
+    "From : " + city + " " + "\n"+ "Age: " + age + " " + "\n" + "Height: " +
+    height + " " + "\n" + "Interests: " + interests.toString() ;
+    }
 
     
-    public String toString() {
+    public String printFullName() {
         return firstName + " " + lastNane;
     }
 

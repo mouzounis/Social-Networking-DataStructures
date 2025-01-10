@@ -30,6 +30,10 @@ public class Vertex {
 		return connectedUsers;
 	}
 
+	public ArrayList<Edge> getEdges() {
+		return this.edges;
+	}
+
 	public void prints() {
 		String message = "";
 
