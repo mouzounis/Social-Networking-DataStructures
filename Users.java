@@ -93,7 +93,7 @@ public class Users extends Names {
     return "FirstName : " + firstName + " " + "\n" + "LastName: " + lastNane + ""
     + "\n" +
     "From : " + city + " " + "\n"+ "Age: " + age + " " + "\n" + "Height: " +
-    height + " " + "\n" + "Interests: " + interests.toString() ;
+    height + " " + "\n" + "Gender: " + gender + "\n" + "Interests: " + interests.toString() ;
     }
 
     

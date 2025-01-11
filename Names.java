@@ -76,6 +76,10 @@ public class Names {
         return interests;
     }
 
+    public static boolean randGender(){
+        Random random = new Random();
+        return random.nextBoolean();
+    }
     public static void main(String[] args) {
         int fn = combinedMaleNames.length;
         int ln = combinedMaleLastNames.length;
