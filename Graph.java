@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class Graph extends Names {
@@ -70,28 +71,26 @@ public class Graph extends Names {
     public static HashMap<Vertex, Integer> generateRecommendations(Vertex userID) {
         HashMap<Vertex, Integer> recommendations = new HashMap<>();
         Users user = userID.getData();
-        ArrayList<String> userInterests = user.getInterestsArrayList();
+
+        HashSet<String> userInterestsSet = new HashSet<>(user.getInterestsArrayList());
         Boolean userGender = user.getGender();
 
         for (Map.Entry<String, Vertex> entry : userMap.entrySet()) {
             Vertex v = entry.getValue();
             Users otherUser = v.getData();
+
+            // Check for gender difference
             if (!userGender.equals(otherUser.getGender())) {
-                ArrayList<String> otherUserInterests = otherUser.getInterestsArrayList();
-                int points = 0;
-                for (String interest : userInterests) {
-                    if (otherUserInterests.contains(interest)) {
-                        points++;
-                    }
-                }
+                HashSet<String> otherUserInterestsSet = new HashSet<>(otherUser.getInterestsArrayList());
+                otherUserInterestsSet.retainAll(userInterestsSet);
+                int points = otherUserInterestsSet.size(); // Size of intersection set
                 recommendations.put(v, points);
             }
         }
-
         return recommendations.entrySet()
                 .stream()
                 .sorted(Map.Entry.<Vertex, Integer>comparingByValue().reversed())
-                .limit(20)
+                .limit(10)
                 .collect(HashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), HashMap::putAll);
     }
 
@@ -102,6 +101,5 @@ public class Graph extends Names {
     public static Map<String, Vertex> getUserMap() {
         return userMap;
     }
-
 
 }

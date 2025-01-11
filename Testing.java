@@ -68,7 +68,7 @@ public class Testing extends Graph {
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 5000000; i++) { // we can use HashMap
+        for (int i = 0; i < 15000001; i++) { // we can use HashMap
             boolean gender = randGender();
             Vertex userID = userNetwork
                     .addUser(new Users(Names.randFirstName(gender), Names.randLastName(gender), Names.randCity(), Names.randAge(), Names.randHeight(), gender, Names.randInterests()));
@@ -91,7 +91,6 @@ public class Testing extends Graph {
             Vertex v = entry.getKey();
             Integer score = entry.getValue();
             System.out.println(v.getData().printFullName() + " - Recommendation Score: " + score);
-            System.out.println(v.getData().getInterestsArrayList() + " Interest of " + v.getData().printFullName());
         });
         System.out.println("1m Users " + (end - start) + " ms");
     }
