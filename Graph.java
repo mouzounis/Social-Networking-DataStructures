@@ -65,56 +65,37 @@ public class Graph extends Names {
         for (Vertex v : vertices) {
             v.prints();
 
-        }
-    }
+            }
 
-    public static ArrayList<Vertex> generateRecommendations(Vertex userID) {
-        ArrayList<Vertex> recommendations = new ArrayList<>();
-        ArrayList<Integer> pointsList = new ArrayList<>();
-        Users user = userID.getData();
-        ArrayList<String> userInterests = user.getInterestsArrayList();
-        boolean userGender = user.getGender();
+            public static HashMap<Vertex, Integer> generateRecommendations(Vertex userID) {
+                HashMap<Vertex, Integer> recommendations = new HashMap<>();
+                Users user = userID.getData();
+                ArrayList<String> userInterests = user.getInterestsArrayList();
+                Boolean userGender = user.getGender();
 
-        for (Map.Entry<String, Vertex> entry : userMap.entrySet()) {
-            Vertex v = entry.getValue();
-            Users otherUser = v.getData();
-            //if (otherUser.getGender() != userGender) {
-                ArrayList<String> otherUserInterests = otherUser.getInterestsArrayList();
-                int points = 0;
-                for (String interest : userInterests) {
-                    if (otherUserInterests.contains(interest)) {
-                        points++;
+                for (Map.Entry<String, Vertex> entry : userMap.entrySet()) {
+                    Vertex v = entry.getValue();
+                    Users otherUser = v.getData();
+                    if (!userGender.equals(otherUser.getGender())) {
+                        ArrayList<String> otherUserInterests = otherUser.getInterestsArrayList();
+                        int points = 0;
+                        for (String interest : userInterests) {
+                            if (otherUserInterests.contains(interest)) {
+                                points++;
+                            }
+                        }
+                        recommendations.put(v, points);
                     }
                 }
-                recommendations.add(v);
-                pointsList.add(points);
-            //}
-        }
 
-        // Sort recommendations based on points in descending order
-        for (int i = 0; i < pointsList.size() - 1; i++) {
-            for (int j = 0; j < pointsList.size() - i - 1; j++) {
-                if (pointsList.get(j) < pointsList.get(j + 1)) {
-                    int tempPoints = pointsList.get(j);
-                    pointsList.set(j, pointsList.get(j + 1));
-                    pointsList.set(j + 1, tempPoints);
-
-                    Vertex tempVertex = recommendations.get(j);
-                    recommendations.set(j, recommendations.get(j + 1));
-                    recommendations.set(j + 1, tempVertex);
-                }
+                return recommendations.entrySet()
+                        .stream()
+                        .sorted(Map.Entry.<Vertex, Integer>comparingByValue().reversed())
+                        .limit(15)
+                        .collect(HashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), HashMap::putAll);
             }
-        }
 
-        // Limit to top 10 matches
-        if (recommendations.size() > 10) {
-            recommendations = new ArrayList<>(recommendations.subList(0, 10));
-        }
-
-        return recommendations;
-    }
-
-    public static void addUserToMap(String userID, Vertex vertex) {
+            public static void addUserToMap(String userID, Vertex vertex) {
         userMap.put(userID, vertex);
     }
 
@@ -123,25 +104,6 @@ public class Graph extends Names {
     }
 
     public static void main(String[] args) {
-        // Declaring the Network
-        Graph userNetwork = new Graph(true);
-
-        // Creating the users
-        Vertex user1 = userNetwork
-                .addUser(new Users(Names.randFirstName(true), Names.randLastName(true), Names.randCity(),
-                        Names.randAge(), Names.randHeight(), true, Names.randInterests()));
-        Vertex user2 = userNetwork
-                .addUser(new Users(Names.randFirstName(true), Names.randLastName(true), Names.randCity(),
-                        Names.randAge(), Names.randHeight(), true, Names.randInterests()));
-        Vertex user3 = userNetwork
-                .addUser(new Users(Names.randFirstName(true), Names.randLastName(true), Names.randCity(),
-                        Names.randAge(), Names.randHeight(), true, Names.randInterests()));
-        Vertex user4 = userNetwork
-                .addUser(new Users(Names.randFirstName(true), Names.randLastName(true), Names.randCity(),
-                        Names.randAge(), Names.randHeight(), true, Names.randInterests()));
-        Vertex user5 = userNetwork
-                .addUser(new Users(Names.randFirstName(true), Names.randLastName(true), Names.randCity(),
-                        Names.randAge(), Names.randHeight(), true, Names.randInterests()));
     }
 
 }

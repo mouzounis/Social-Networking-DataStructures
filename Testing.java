@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class Testing extends Graph {
 
     public Testing(boolean inputIsDirected) {
@@ -63,22 +65,31 @@ public class Testing extends Graph {
         // Interests");
 
         // Testing the generateRecommendations method with 100 users;
+        
 
-        for (int i = 0; i < 10100; i++) { // we can use HashMap
+        for (int i = 0; i < 1200100; i++) { // we can use HashMap
+            boolean gender = randGender();
             Vertex userID = userNetwork
-                    .addUser(new Users(Names.randFirstName(true), Names.randLastName(true), Names.randCity(), Names.randAge(), Names.randHeight(), true, Names.randInterests()));
+                    .addUser(new Users(Names.randFirstName(gender), Names.randLastName(gender), Names.randCity(), Names.randAge(), Names.randHeight(), gender, Names.randInterests()));
             Graph.addUserToMap("user" + i, userID);
             //System.out.println(getUserMap().get("user" + i).getData().printFullName());
         }
         
         
-        Vertex user = getUserMap().get("user1");
-        Vertex user2 = getUserMap().get("user2");
-        System.out.println(user.getData().getInterestsArrayList().toString());
-        System.out.println(user2.getData().getInterestsArrayList().toString());
-        System.out.println(getSharedInterests(user, user2).toString() + " Shared Interests");
-        //System.out.println(Graph.getUserMap());
-        System.out.println(generateRecommendations(user).toString());
+         Vertex user = getUserMap().get("user1");
+        // Vertex user2 = getUserMap().get("user2");
+        // System.out.println(user.getData().getInterestsArrayList().toString());
+        // System.out.println(user2.getData().getInterestsArrayList().toString());
+        // System.out.println(getSharedInterests(user, user2).toString() + " Shared Interests");
+        HashMap<Vertex, Integer> map = generateRecommendations(user);
+       map.entrySet().stream()
+            .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+            .forEach(entry -> {
+            Vertex v = entry.getKey();
+            Integer score = entry.getValue();
+            System.out.println(v.getData().printFullName() + " - Recommendation Score: " + score);
+            });
+        //System.out.println(map.toString());
     }
 
 }
