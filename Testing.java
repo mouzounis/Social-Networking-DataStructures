@@ -65,31 +65,35 @@ public class Testing extends Graph {
         // Interests");
 
         // Testing the generateRecommendations method with 100 users;
-        
 
-        for (int i = 0; i < 1200100; i++) { // we can use HashMap
+        long start = System.currentTimeMillis();
+
+        for (int i = 0; i < 5000000; i++) { // we can use HashMap
             boolean gender = randGender();
             Vertex userID = userNetwork
                     .addUser(new Users(Names.randFirstName(gender), Names.randLastName(gender), Names.randCity(), Names.randAge(), Names.randHeight(), gender, Names.randInterests()));
             Graph.addUserToMap("user" + i, userID);
             //System.out.println(getUserMap().get("user" + i).getData().printFullName());
         }
+
+        long end = System.currentTimeMillis();
         
         
-         Vertex user = getUserMap().get("user1");
+        Vertex user = getUserMap().get("user1");
         // Vertex user2 = getUserMap().get("user2");
-        // System.out.println(user.getData().getInterestsArrayList().toString());
+        System.out.println(user.getData().getInterestsArrayList().toString());
         // System.out.println(user2.getData().getInterestsArrayList().toString());
         // System.out.println(getSharedInterests(user, user2).toString() + " Shared Interests");
         HashMap<Vertex, Integer> map = generateRecommendations(user);
-       map.entrySet().stream()
-            .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
-            .forEach(entry -> {
+        map.entrySet().stream()
+        .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
+        .forEach(entry -> {
             Vertex v = entry.getKey();
             Integer score = entry.getValue();
             System.out.println(v.getData().printFullName() + " - Recommendation Score: " + score);
-            });
-        //System.out.println(map.toString());
+            System.out.println(v.getData().getInterestsArrayList() + " Interest of " + v.getData().printFullName());
+        });
+        System.out.println("1m Users " + (end - start) + " ms");
     }
 
 }

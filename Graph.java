@@ -64,38 +64,38 @@ public class Graph extends Names {
     public void print() {
         for (Vertex v : vertices) {
             v.prints();
+        }
+    }
 
-            }
+    public static HashMap<Vertex, Integer> generateRecommendations(Vertex userID) {
+        HashMap<Vertex, Integer> recommendations = new HashMap<>();
+        Users user = userID.getData();
+        ArrayList<String> userInterests = user.getInterestsArrayList();
+        Boolean userGender = user.getGender();
 
-            public static HashMap<Vertex, Integer> generateRecommendations(Vertex userID) {
-                HashMap<Vertex, Integer> recommendations = new HashMap<>();
-                Users user = userID.getData();
-                ArrayList<String> userInterests = user.getInterestsArrayList();
-                Boolean userGender = user.getGender();
-
-                for (Map.Entry<String, Vertex> entry : userMap.entrySet()) {
-                    Vertex v = entry.getValue();
-                    Users otherUser = v.getData();
-                    if (!userGender.equals(otherUser.getGender())) {
-                        ArrayList<String> otherUserInterests = otherUser.getInterestsArrayList();
-                        int points = 0;
-                        for (String interest : userInterests) {
-                            if (otherUserInterests.contains(interest)) {
-                                points++;
-                            }
-                        }
-                        recommendations.put(v, points);
+        for (Map.Entry<String, Vertex> entry : userMap.entrySet()) {
+            Vertex v = entry.getValue();
+            Users otherUser = v.getData();
+            if (!userGender.equals(otherUser.getGender())) {
+                ArrayList<String> otherUserInterests = otherUser.getInterestsArrayList();
+                int points = 0;
+                for (String interest : userInterests) {
+                    if (otherUserInterests.contains(interest)) {
+                        points++;
                     }
                 }
-
-                return recommendations.entrySet()
-                        .stream()
-                        .sorted(Map.Entry.<Vertex, Integer>comparingByValue().reversed())
-                        .limit(15)
-                        .collect(HashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), HashMap::putAll);
+                recommendations.put(v, points);
             }
+        }
 
-            public static void addUserToMap(String userID, Vertex vertex) {
+        return recommendations.entrySet()
+                .stream()
+                .sorted(Map.Entry.<Vertex, Integer>comparingByValue().reversed())
+                .limit(20)
+                .collect(HashMap::new, (m, e) -> m.put(e.getKey(), e.getValue()), HashMap::putAll);
+    }
+
+    public static void addUserToMap(String userID, Vertex vertex) {
         userMap.put(userID, vertex);
     }
 
@@ -103,7 +103,5 @@ public class Graph extends Names {
         return userMap;
     }
 
-    public static void main(String[] args) {
-    }
 
 }
