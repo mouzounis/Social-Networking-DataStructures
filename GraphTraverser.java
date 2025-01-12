@@ -32,15 +32,5 @@ class GraphTraverser { //Code provided by freeCodeCamp
 		}
 	}
 	public static void main(String[] args) {
-		TestGraph test = new TestGraph();
-		Vertex startingVertex = test.getStartingVertex();
-		ArrayList<Vertex> visitedVertices1 = new ArrayList<Vertex>();
-		ArrayList<Vertex> visitedVertices2 = new ArrayList<Vertex>();
-		visitedVertices1.add(startingVertex);
-		visitedVertices2.add(startingVertex);
-		System.out.println("DFS:");
-		GraphTraverser.depthFirstTraversal(startingVertex, visitedVertices1);
-		System.out.println("BFS:");
-		GraphTraverser.breadthFirstSearch(startingVertex, visitedVertices2);
 	}
 }

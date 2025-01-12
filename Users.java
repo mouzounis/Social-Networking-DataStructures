@@ -49,7 +49,7 @@ public class Users extends Names {
             this.age = age;
         }
     
-        public int getAge() {
+        public Integer getAge() {
             return this.age;
         }
     
@@ -57,7 +57,7 @@ public class Users extends Names {
             this.height = height;
         }
     
-        public int getHeight() {
+        public Integer getHeight() {
             return this.height;
         }
     

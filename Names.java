@@ -63,12 +63,12 @@ public class Names {
     }
 
     public static Integer randAge(){
-        int rand = (int) (Math.random()*(55 - 17)) + 18;
+        Integer rand = (int) (Math.random()*(55 - 17)) + 18;
         return rand;
     }
 
     public static Integer randHeight(){
-        int rand = (int) (Math.random()*(220 - 139)+ 140);
+        Integer rand = (int) (Math.random()*(220 - 139)+ 140);
         return rand;
     }
 

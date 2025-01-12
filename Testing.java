@@ -68,7 +68,8 @@ public class Testing extends Graph {
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 15000001; i++) { // we can use HashMap
+        //Genarates Users
+        for (int i = 0; i <= 1000; i++) {
             boolean gender = randGender();
             Vertex userID = userNetwork
                     .addUser(new Users(Names.randFirstName(gender), Names.randLastName(gender), Names.randCity(), Names.randAge(), Names.randHeight(), gender, Names.randInterests()));
@@ -80,9 +81,9 @@ public class Testing extends Graph {
         
         
         Vertex user = getUserMap().get("user1");
-        // Vertex user2 = getUserMap().get("user2");
-        System.out.println(user.getData().getInterestsArrayList().toString());
-        // System.out.println(user2.getData().getInterestsArrayList().toString());
+
+        System.out.println(user.getData().getAge().toString() + " " + user.getData().getHeight());
+         System.out.println(user.getData().getInterestsArrayList().toString());
         // System.out.println(getSharedInterests(user, user2).toString() + " Shared Interests");
         HashMap<Vertex, Integer> map = generateRecommendations(user);
         map.entrySet().stream()
@@ -90,7 +91,7 @@ public class Testing extends Graph {
         .forEach(entry -> {
             Vertex v = entry.getKey();
             Integer score = entry.getValue();
-            System.out.println(v.getData().printFullName() + " - Recommendation Score: " + score);
+            System.out.println(v.getData().toString() + " - Recommendation Score: " + score + "\n");
         });
         System.out.println("1m Users " + (end - start) + " ms");
     }

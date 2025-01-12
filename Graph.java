@@ -78,16 +78,43 @@ public class Graph extends Names {
         for (Map.Entry<String, Vertex> entry : userMap.entrySet()) {
             Vertex v = entry.getValue();
             Users otherUser = v.getData();
+            
+            // Skip the current user
+            if (userID.equals(v)) {
+                continue;
+            }
+            
+            int points = 0;
+
+            // Check for age similarity
+            Integer otherUserAge = otherUser.getAge();
+            Integer userAge = user.getAge();
+            if (userAge != null && otherUserAge != null) {
+                if (Math.abs(userAge - otherUserAge) <= 5) {
+                    points++;
+                }
+            }
+
+            // Check for height similarity
+            Integer otherUserHeight = otherUser.getHeight();
+            Integer userHeight = user.getHeight();
+            if (userHeight != null && otherUserHeight != null) {
+                if (Math.abs(userHeight - otherUserHeight) <= 20) {
+                    points++;
+                }
+            }
 
             // Check for gender difference
             if (!userGender.equals(otherUser.getGender())) {
                 HashSet<String> otherUserInterestsSet = new HashSet<>(otherUser.getInterestsArrayList());
                 otherUserInterestsSet.retainAll(userInterestsSet);
-                int points = otherUserInterestsSet.size(); // Size of intersection set
-                recommendations.put(v, points);
+                points += otherUserInterestsSet.size(); // Size of intersection set
             }
+
+            recommendations.put(v, points);
+
         }
-        return recommendations.entrySet()
+        return recommendations.entrySet() // with the help of AI
                 .stream()
                 .sorted(Map.Entry.<Vertex, Integer>comparingByValue().reversed())
                 .limit(10)
