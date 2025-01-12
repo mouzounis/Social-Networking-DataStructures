@@ -69,7 +69,7 @@ public class Users extends Names {
             return this.gender;
         }
     
-        public ArrayList<String> addInterest(String userInterest){ // needs work
+        public ArrayList<String> addInterest(String userInterest){
             List<String> list = Arrays.asList(Names.getInterests());
             if (list.contains(userInterest)) {
                 this.interests.add(userInterest);  
