@@ -16,10 +16,26 @@ public class Names {
     private static String[]city = {"Athens", "Thessaloniki", "Patra", "Heraklion", "Larissa", "Volos", "Ioannina", "Kavala", "Kalamata", "Chania", "Rhodes", "Corfu", "Agrinio", "Lamia", "Komotini", "Alexandroupoli", "Chalkida", "Serres", "Veria", "Pyrgos", "Sparta", "Drama", "Trikala", "Karditsa", "Kozani", "Florina", "Edessa", "Nafplio", "Katerini", "Rethymno", "Mytilene", "Tripoli", "Preveza", "Orestiada", "Grevena", "Thiva", "Naxos", "Zakynthos", "Lefkada", "Mykonos", "Paros", "Samos", "Chios", "Milos", "Skiathos", "Syros", "Kalymnos", "Leros", "Karpathos", "Kos", "Andros", "Tinos", "Hydra", "Spetses", "Poros", "Kea", "Aegina", "Salamis", "Kythira", "Kastoria", "Kilkis", "Arta", "Messolonghi", "Amfissa", "Farsala", "Elassona", "Naousa", "Amorgos", "Karystos", "Eretria", "Kymi", "Almyros", "Loutraki", "Galaxidi", "Epidaurus", "Antikyra", "Livadeia", "Plaka", "Karyes", "Skopelos", "Agios Nikolaos", "Ierapetra", "Neapoli", "Kranidi", "Methana", "Gytheio", "Areopoli", "Monemvasia", "Leonidio", "Ermioni", "Porto Heli", "Molyvos", "Agia Pelagia", "Arkoudi", "Kalavryta", "Dimitsana", "Stemnitsa", "Parga", "Zagori", "Metsovo"};
     private static String[] interests = {"Baking", "Birdwatching", "Meditation", "Science", "History", "Philosophy", "Anthropology", "Social Media", "Makeup", "Skincare", "Jewelry Making", "Chess", "Board Games", "Card Games", "Interior Design", "Home Improvement", "Cars", "Motorcycles", "Boating", "Climbing", "Skiing", "Snowboarding", "Ice Skating", "Surfing","Magic Tricks", "Puzzles", "Escape Rooms", "Concerts", "Music Festivals", "Theater", "Comics", "Graphic Novels", "Anime", "Manga", "Fanfiction", "DIY Projects", "Home Brewing", "Vlogging"};
     
-    public static ArrayList<String> randInterests() {
+    public static ArrayList<String> randInterestsVarSize() {
         Random rand = new Random();
         ArrayList<String> randomInterests = new ArrayList<>();
         int numberOfInterests = rand.nextInt(7) + 4;  // Random number between 4 and 10
+
+        // Randomly select the interests
+        while (randomInterests.size() < numberOfInterests) {
+            String interest = interests[rand.nextInt(interests.length)];
+            if (!randomInterests.contains(interest)) {  // Ensure no duplicates
+                randomInterests.add(interest);
+            }
+        }
+
+        return randomInterests;
+    }
+
+    public static ArrayList<String> randInterestsFixedSize() {
+        Random rand = new Random();
+        ArrayList<String> randomInterests = new ArrayList<>();
+        int numberOfInterests = 10;  // Random number between 4 and 10
 
         // Randomly select the interests
         while (randomInterests.size() < numberOfInterests) {
@@ -80,14 +96,7 @@ public class Names {
         Random random = new Random();
         return random.nextBoolean();
     }
-    public static void main(String[] args) {
-        int fn = combinedMaleNames.length;
-        int ln = combinedMaleLastNames.length;
-        int c = city.length;
-
-        System.out.println(Arrays.toString(interests));
-
-        
+    public static void main(String[] args) { 
     }
 
 }

@@ -33,7 +33,7 @@ public class Graph extends Names {
             user2ID.removeConnectedUsers(user1ID);
         }
     }
-
+    
     public void removeUser(Vertex userID) {
         vertices.remove(userID);
     }

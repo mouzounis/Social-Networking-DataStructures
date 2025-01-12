@@ -8,6 +8,8 @@ public class Testing extends Graph {
 
     public static void main(String[] args) {
 
+        int numUsers = 1000;
+
         // Declaring the Network
         Graph userNetwork = new Graph(true);
 
@@ -54,9 +56,7 @@ public class Testing extends Graph {
         // Removing connection between user1 and user2
         //userNetwork.removeConnectedUsers(user1, user2);
 
-        // printing what interests user 1 and user 2 has and then what interests they
-        // share
-
+        // printing what interests user 1 and user 2 has and then what interests they share
         // System.out.println(user1.getData().getInterestsArrayList().toString() +
         // "Interests of user 1");
         // System.out.println(user2.getData().getInterestsArrayList().toString() +
@@ -69,10 +69,11 @@ public class Testing extends Graph {
         long start = System.currentTimeMillis();
 
         //Genarates Users
-        for (int i = 0; i <= 1000; i++) {
+
+        for (int i = 0; i <= numUsers; i++) {
             boolean gender = randGender();
             Vertex userID = userNetwork
-                    .addUser(new Users(Names.randFirstName(gender), Names.randLastName(gender), Names.randCity(), Names.randAge(), Names.randHeight(), gender, Names.randInterests()));
+                    .addUser(new Users(Names.randFirstName(gender), Names.randLastName(gender), Names.randCity(), Names.randAge(), Names.randHeight(), gender, Names.randInterestsFixedSize()));
             Graph.addUserToMap("user" + i, userID);
             //System.out.println(getUserMap().get("user" + i).getData().printFullName());
         }
@@ -81,19 +82,21 @@ public class Testing extends Graph {
         
         
         Vertex user = getUserMap().get("user1");
+        //Returns user1 Age, height and Interests
+        //System.out.println(user.getData().getAge().toString() + " " + user.getData().getHeight());
+        // System.out.println(user.getData().getInterestsArrayList().toString());
+    
 
-        System.out.println(user.getData().getAge().toString() + " " + user.getData().getHeight());
-         System.out.println(user.getData().getInterestsArrayList().toString());
-        // System.out.println(getSharedInterests(user, user2).toString() + " Shared Interests");
+        //Printing the Recommendation List with the users First and Last name as well their match score
         HashMap<Vertex, Integer> map = generateRecommendations(user);
-        map.entrySet().stream()
-        .sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue()))
-        .forEach(entry -> {
+        map.entrySet().stream().sorted((e1, e2) -> e2.getValue().compareTo(e1.getValue())).forEach(entry -> { //In help with AI
             Vertex v = entry.getKey();
             Integer score = entry.getValue();
-            System.out.println(v.getData().toString() + " - Recommendation Score: " + score + "\n");
+            System.out.println(v.getData().printFullName() + " - Recommendation Score: " + score + "\n");
         });
-        System.out.println("1m Users " + (end - start) + " ms");
+
+        //Printing the Runtime in ms
+        System.out.println(numUsers + " Users " + (end - start) + " ms");
     }
 
 }
